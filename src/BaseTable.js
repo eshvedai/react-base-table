@@ -41,6 +41,7 @@ const getContainerStyle = (width, maxWidth, height) => ({
 });
 
 const DEFAULT_COMPONENTS = {
+  Table: GridTable,
   TableCell,
   TableHeaderCell,
   ExpandIcon,
@@ -531,8 +532,10 @@ class BaseTable extends React.PureComponent {
       // make sure `scrollLeft` is always integer to fix a sync bug when scrolling to end horizontally
       tableWidth = Math.max(Math.round(columnsWidth), tableWidth);
     }
+    const Table = this._getComponent('Table');
+
     return (
-      <GridTable
+      <Table
         {...rest}
         {...this.state}
         className={this._prefixClass('table-main')}
@@ -563,8 +566,10 @@ class BaseTable extends React.PureComponent {
     const containerHeight = this._getFrozenContainerHeight();
     const offset = this._verticalScrollbarSize || 20;
     const columnsWidth = this.columnManager.getLeftFrozenColumnsWidth();
+    const Table = this._getComponent('Table');
+
     return (
-      <GridTable
+      <Table
         {...rest}
         {...this.state}
         containerStyle={this._getLeftTableContainerStyle(columnsWidth, width, containerHeight)}
@@ -597,8 +602,10 @@ class BaseTable extends React.PureComponent {
     const containerHeight = this._getFrozenContainerHeight();
     const columnsWidth = this.columnManager.getRightFrozenColumnsWidth();
     const scrollbarWidth = this._verticalScrollbarSize;
+    const Table = this._getComponent('Table');
+
     return (
-      <GridTable
+      <Table
         {...rest}
         {...this.state}
         containerStyle={this._getLeftTableContainerStyle(columnsWidth + scrollbarWidth, width, containerHeight)}
@@ -1306,6 +1313,7 @@ BaseTable.propTypes = {
    * A object for the custom components, like `ExpandIcon` and `SortIndicator`
    */
   components: PropTypes.shape({
+    Table: PropTypes.elementType,
     TableCell: PropTypes.elementType,
     TableHeaderCell: PropTypes.elementType,
     ExpandIcon: PropTypes.elementType,
